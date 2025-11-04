@@ -1,0 +1,87 @@
+﻿@page
+@model LibMan.Pages.WelcomeModel
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<style>
+    .welcome-header { background: linear-gradient(135deg, rgba(218, 165, 32, 0.15) 0%, rgba(139, 69, 19, 0.08) 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px; text-align: center; }
+    .book-grid-container { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important; gap: 25px !important; margin-top: 30px !important; }
+    .book-card-item { background: white !important; border-radius: 15px !important; padding: 20px !important; box-shadow: 0 5px 20px rgba(139, 69, 19, 0.15) !important; text-align: center !important; transition: all 0.3s ease !important; }
+    .book-card-item:hover { transform: translateY(-5px) !important; box-shadow: 0 10px 30px rgba(218, 165, 32, 0.25) !important; }
+    .book-cover-img { width: 100% !important; max-width: 200px !important; height: 280px !important; object-fit: cover !important; border-radius: 8px !important; margin-bottom: 15px !important; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.2) !important; }
+    .action-btn { display: inline-block !important; margin: 5px !important; padding: 8px 20px !important; background: #DAA520 !important; color: white !important; border-radius: 20px !important; text-decoration: none !important; font-size: 0.9rem !important; transition: all 0.3s ease !important; }
+    .action-btn:hover { background: #B8860B !important; transform: translateY(-2px) !important; }
+</style>
+
+<div class="welcome-header">
+    <h3 style="color: #DAA520; font-size: 2rem; margin-bottom: 10px; font-family: 'Playfair Display', serif;">Welcome to Your Library! 📖</h3>
+    <p style="color: #666; font-size: 1.1rem;">Manage your personal book collection with ease</p>
+</div>
+
+<div style="text-align: center; margin-bottom: 30px;">
+    <a asp-page="Create" style="display: inline-block; padding: 15px 35px; background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%); color: white; border-radius: 30px; font-size: 1.1rem; font-weight: 600; box-shadow: 0 5px 20px rgba(218, 165, 32, 0.3); text-decoration: none; transition: all 0.3s ease;">➕ Add New Book</a>
+</div>
+
+@if (Model.Books != null && Model.Books.Count > 0)
+{
+    <div class="book-grid-container">
+        @foreach (var item in Model.Books)
+        {
+            <div class="book-card-item">
+                @if (!string.IsNullOrEmpty(item.Cover))
+                {
+                    <img src="@item.Cover" alt="@item.Title" class="book-cover-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                    <div style="width: 100%; height: 280px; background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%); border-radius: 8px; display: none; align-items: center; justify-content: center; color: white; font-size: 3rem; margin-bottom: 15px;">📚</div>
+                }
+                else
+                {
+                    <div style="width: 100%; height: 280px; background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem; margin-bottom: 15px;">📚</div>
+                }
+                
+                <h4 style="color: #DAA520; margin-top: 15px; margin-bottom: 10px; font-size: 1.3rem; font-family: 'Playfair Display', serif;">@Html.DisplayFor(modelItem => item.Title)</h4>
+                <p style="color: #666; font-style: italic; margin: 5px 0;">by @Html.DisplayFor(modelItem => item.Author)</p>
+                <p style="color: #999; margin: 5px 0;">📄 @Html.DisplayFor(modelItem => item.Pages) pages</p>
+                
+                @{
+                    var statusBg = item.ReadingStatus?.ToLower() switch
+                    {
+                        "reading" or "currently reading" => "#FFE082",
+                        "completed" or "read" => "#C8E6C9",
+                        "to read" or "unread" => "#E1BEE7",
+                        _ => "#FFE082"
+                    };
+                    var statusColor = item.ReadingStatus?.ToLower() switch
+                    {
+                        "reading" or "currently reading" => "#856404",
+                        "completed" or "read" => "#2E7D32",
+                        "to read" or "unread" => "#6A1B9A",
+                        _ => "#856404"
+                    };
+                }
+                <p style="margin-top: 10px;">
+                    <span style="display: inline-block; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; background: @statusBg; color: @statusColor;">@Html.DisplayFor(modelItem => item.ReadingStatus)</span>
+                </p>
+                
+                <div style="margin-top: 15px;">
+                    <a asp-page="./Edit" asp-route-id="@item.Title" class="action-btn">✏️ Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.Title" class="action-btn">👁️ Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Title" class="action-btn" style="background: #dc3545;">🗑️ Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div style="text-align: center; padding: 60px 20px; color: #999;">
+        <h3 style="color: #999; margin-bottom: 15px; font-size: 2rem;">📚 Your Library is Empty</h3>
+        <p style="font-size: 1.1rem; margin-bottom: 20px;">Start building your collection by adding your first book!</p>
+        <a asp-page="Create" style="display: inline-block; padding: 15px 35px; background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%); color: white; border-radius: 30px; font-size: 1.1rem; font-weight: 600; box-shadow: 0 5px 20px rgba(218, 165, 32, 0.3); text-decoration: none; margin-top: 20px;">Add Your First Book</a>
+    </div>
+}
+
+<div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #E8DCC0;">
+    <a asp-page="Welcome" asp-page-handler="Logout" style="background: transparent; border: 2px solid #DAA520; color: #DAA520; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; display: inline-block;">🚪 Logout</a>
+</div>

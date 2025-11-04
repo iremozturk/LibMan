@@ -1,0 +1,100 @@
+﻿@page
+@model LibMan.Pages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="book-card fade-in" style="max-width: 600px; margin: 0 auto;">
+    <h1 style="text-align: center; margin-bottom: 30px;">📚 Add a New Book</h1>
+    
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <div class="form-group">
+            <label asp-for="Books.Title" class="control-label">📖 Book Title</label>
+            <input asp-for="Books.Title" class="form-control" placeholder="Enter the book title" />
+            <span asp-validation-for="Books.Title" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Books.Author" class="control-label">✍️ Author</label>
+            <input asp-for="Books.Author" class="form-control" placeholder="Enter the author's name" />
+            <span asp-validation-for="Books.Author" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Books.Pages" class="control-label">📄 Number of Pages</label>
+            <input asp-for="Books.Pages" class="form-control" type="number" placeholder="Enter number of pages" />
+            <span asp-validation-for="Books.Pages" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Books.ReadingStatus" class="control-label">📌 Reading Status</label>
+            <select asp-for="Books.ReadingStatus" class="form-control">
+                <option value="">Select status...</option>
+                <option value="To Read">To Read</option>
+                <option value="Reading">Reading</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <span asp-validation-for="Books.ReadingStatus" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="Books.Cover" class="control-label">🖼️ Cover Image URL</label>
+            <input asp-for="Books.Cover" id="coverUrl" class="form-control" placeholder="https://example.com/book-cover.jpg" 
+                   onchange="previewImage(this.value)" />
+            <small style="color: #999; display: block; margin-top: 5px;">
+                💡 Paste a direct image URL from the internet (e.g., from Google Images, Amazon, or Goodreads)
+            </small>
+            <div id="imagePreview" style="margin-top: 15px; display: none;">
+                <p style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">Preview:</p>
+                <img id="previewImg" src="" alt="Book cover preview" style="max-width: 200px; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 15px rgba(218, 165, 32, 0.2);" />
+            </div>
+            <span asp-validation-for="Books.Cover" class="text-danger"></span>
+        </div>
+        
+        <div style="background: #FFF8DC; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #DAA520;">
+            <strong style="color: #DAA520;">📚 Where to find book cover images:</strong>
+            <ul style="margin: 10px 0 0 20px; color: #666;">
+                <li>Right-click on any book cover image online → "Copy Image Address"</li>
+                <li>Visit <a href="https://www.goodreads.com" target="_blank" style="color: #DAA520;">Goodreads.com</a> or <a href="https://www.amazon.com" target="_blank" style="color: #DAA520;">Amazon.com</a></li>
+                <li>Search on <a href="https://images.google.com" target="_blank" style="color: #DAA520;">Google Images</a> for "[Book Title] cover"</li>
+                <li>Make sure the URL ends with .jpg, .png, or .gif</li>
+            </ul>
+        </div>
+        
+        <div class="form-group" style="text-align: center; margin-top: 30px;">
+            <input type="submit" value="➕ Add Book" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;" />
+        </div>
+    </form>
+    
+    <div style="text-align: center; margin-top: 25px;">
+        <a asp-page="Welcome" class="btn-secondary" style="text-decoration: none;">← Back to Library</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        function previewImage(url) {
+            const previewDiv = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            
+            if (url && url.trim() !== '') {
+                previewImg.src = url;
+                previewImg.onload = function() {
+                    previewDiv.style.display = 'block';
+                };
+                previewImg.onerror = function() {
+                    previewDiv.style.display = 'none';
+                    alert('⚠️ Could not load image. Please check the URL is correct and accessible.');
+                };
+            } else {
+                previewDiv.style.display = 'none';
+            }
+        }
+    </script>
+}

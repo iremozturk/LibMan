@@ -1,0 +1,83 @@
+﻿@page
+@model LibMan.Pages.DetailsModel
+
+@{
+    ViewData["Title"] = "Book Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<style>
+    .details-container { max-width: 900px !important; margin: 0 auto !important; background: white !important; border-radius: 20px !important; padding: 40px !important; box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15) !important; }
+    .book-info-section { background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(139, 69, 19, 0.05) 100%) !important; padding: 30px !important; border-radius: 15px !important; border: 2px solid #E8DCC0 !important; }
+    .cover-image { width: 100% !important; max-width: 300px !important; height: auto !important; border-radius: 15px !important; box-shadow: 0 8px 25px rgba(218, 165, 32, 0.3) !important; object-fit: cover !important; }
+</style>
+
+<div class="details-container">
+    <h1 style="text-align: center; margin-bottom: 40px; color: #DAA520; font-size: 2.5rem; font-family: 'Playfair Display', serif;">📖 About the Book</h1>
+    
+    <div style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
+        <div style="flex: 0 0 300px; min-width: 250px;">
+            @if (!string.IsNullOrEmpty(Model.Books.Cover))
+            {
+                <img src="@Model.Books.Cover" alt="@Model.Books.Title" class="cover-image" 
+                     onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22450%22%3E%3Crect fill=%22%23DAA520%22 width=%22300%22 height=%22450%22 rx=%2215%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22white%22 font-size=%2272%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3E📚%3C/text%3E%3C/svg%3E';" />
+            }
+            else
+            {
+                <div style="width: 100%; max-width: 300px; height: 450px; background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 5rem; box-shadow: 0 8px 25px rgba(218, 165, 32, 0.3);">📚</div>
+            }
+        </div>
+        
+        <div style="flex: 1; min-width: 300px;">
+            <div class="book-info-section">
+                <h2 style="color: #DAA520; margin-bottom: 25px; font-size: 2.2rem; font-family: 'Playfair Display', serif; border-bottom: 3px solid #DAA520; padding-bottom: 15px;">@Html.DisplayFor(model => model.Books.Title)</h2>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="color: #8B4513; display: block; margin-bottom: 8px; font-size: 1.1rem;">✍️ Author:</strong>
+                    <p style="color: #5D4037; font-size: 1.3rem; font-style: italic; margin: 0; font-weight: 600;">@Html.DisplayFor(model => model.Books.Author)</p>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="color: #8B4513; display: block; margin-bottom: 8px; font-size: 1.1rem;">📄 Pages:</strong>
+                    <p style="color: #5D4037; font-size: 1.2rem; margin: 0;">@Html.DisplayFor(model => model.Books.Pages) pages</p>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <strong style="color: #8B4513; display: block; margin-bottom: 8px; font-size: 1.1rem;">📌 Reading Status:</strong>
+                    @{
+                        var statusBg = Model.Books.ReadingStatus?.ToLower() switch
+                        {
+                            "reading" or "currently reading" => "#FFE082",
+                            "completed" or "read" => "#C8E6C9",
+                            "to read" or "unread" => "#E1BEE7",
+                            _ => "#FFE082"
+                        };
+                        var statusColor = Model.Books.ReadingStatus?.ToLower() switch
+                        {
+                            "reading" or "currently reading" => "#856404",
+                            "completed" or "read" => "#2E7D32",
+                            "to read" or "unread" => "#6A1B9A",
+                            _ => "#856404"
+                        };
+                    }
+                    <p style="margin: 0;">
+                        <span style="display: inline-block; padding: 10px 25px; border-radius: 25px; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; background: @statusBg; color: @statusColor;">
+                            @Html.DisplayFor(model => model.Books.ReadingStatus)
+                        </span>
+                    </p>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
+                <a asp-page="./Edit" asp-route-id="@Model.Books.Title" 
+                   style="background: linear-gradient(135deg, #DAA520 0%, #B8860B 100%); color: white; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 5px 20px rgba(218, 165, 32, 0.3); transition: all 0.3s ease; display: inline-block;">
+                    ✏️ Edit Book
+                </a>
+                <a asp-page="./Welcome" 
+                   style="background: transparent; border: 2px solid #DAA520; color: #DAA520; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all 0.3s ease; display: inline-block;">
+                    ← Back to Library
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

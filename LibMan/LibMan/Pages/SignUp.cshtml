@@ -1,0 +1,59 @@
+﻿@page
+@model LibMan.Pages.SignUpModel
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Pages/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="login-container fade-in" style="max-width: 500px;">
+    <h1 class="login-title">📝 Create Account</h1>
+    <p style="text-align: center; color: #666; margin-bottom: 30px;">Join LibMan and start managing your library</p>
+    
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        
+        <div class="form-group">
+            <label asp-for="User.Email" class="control-label">📧 Email Address</label>
+            <input asp-for="User.Email" class="form-control" type="email" placeholder="your.email@example.com" />
+            <span asp-validation-for="User.Email" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="User.FirstName" class="control-label">👤 First Name</label>
+            <input asp-for="User.FirstName" class="form-control" placeholder="Enter your first name" />
+            <span asp-validation-for="User.FirstName" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="User.LastName" class="control-label">👤 Last Name</label>
+            <input asp-for="User.LastName" class="form-control" placeholder="Enter your last name" />
+            <span asp-validation-for="User.LastName" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="User.Birthdate" class="control-label">🎂 Birthdate</label>
+            <input asp-for="User.Birthdate" class="form-control" type="date" />
+            <span asp-validation-for="User.Birthdate" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group">
+            <label asp-for="User.Password" class="control-label">🔒 Password</label>
+            <input asp-for="User.Password" class="form-control" type="password" placeholder="Create a secure password" />
+            <span asp-validation-for="User.Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group" style="text-align: center; margin-top: 30px;">
+            <input type="submit" value="✨ Create Account" class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;" />
+        </div>
+    </form>
+    
+    <div style="text-align: center; margin-top: 25px;">
+        <p style="color: #666;">Already have an account? <a asp-page="./Index" style="color: #DAA520; font-weight: 600;">Login Here</a></p>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
