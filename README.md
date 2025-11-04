@@ -35,16 +35,13 @@ The application was developed as part of a university coursework project (CS382 
 *Centered login form with elegant design. Clean white card with golden accents, featuring email and password fields with a prominent login button.*
 
 ### Welcome/Dashboard
-![Welcome Page](screenshots/welcome.png)
+![Welcome Page](screenshots/book%20list.png)
 *Card-based grid layout displaying your personal book collection. Each book card shows the cover image, title, author, page count, reading status badge, and action buttons (Edit, Details, Delete).*
 
 ### Add Book
 ![Add Book](screenshots/create.png)
 *Comprehensive form to add new books with helpful instructions. Features fields for title, author, pages, reading status dropdown, and cover image URL with preview functionality. Includes tips for finding book cover images online.*
 
-### Book Details
-![Book Details](screenshots/details.png)
-*Detailed view showcasing the book cover prominently on the left and complete book information on the right. Displays title, author, page count, and reading status with elegant status badges. Includes Edit and Back navigation buttons.*
 
 ---
 
