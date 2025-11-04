@@ -12,7 +12,7 @@ A web application for managing personal book collections, built with ASP.NET Cor
 
 LibMan is a personal library management system that helps users organize their book collections. It provides a straightforward way to track reading progress, store book information, and manage a personal library with an intuitive interface.
 
-The application was developed as part of a university coursework project (CENG382 - Fall 2020) and has been updated to work with modern .NET 9.0.
+The application was developed as part of a university coursework project (CS382 - Fall 2020) and has been updated to work with modern .NET 9.0.
 
 ---
 
@@ -206,7 +206,7 @@ The interface draws inspiration from the New York Public Library's classic aesth
 
 ## About This Project
 
-This project was created as part of **CENG382 - Web Programming** coursework (Fall 2020). It demonstrates:
+This project was created as part of **CS382 - Web Programming** coursework (Fall 2020). It demonstrates:
 
 - Full-stack web development with ASP.NET Core
 - Database design and Entity Framework Core
@@ -214,8 +214,8 @@ This project was created as part of **CENG382 - Web Programming** coursework (Fa
 - Modern UI/UX design principles
 - Software engineering best practices
 
-**Student ID**: C1611047  
-**Course**: CENG382  
+  
+**Course**: CS382  
 **Semester**: Fall 2020
 
 ---
